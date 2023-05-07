@@ -14,11 +14,10 @@ typedef long long  ll;
 #define _ASRafi_   ios::sync_with_stdio(false);cin.tie(0),cin.tie(0);
 using namespace std;
 
-//const double pi=2*acos(0.0);
-const ll N=1e5+10, mod=1e9+7;
-
+const int N=1e5+10, mod=1e9+7;
 vector<pair<int,int>>g[N];
-vector<int>level(N,INT_MAX);
+vector<int>level(N, INT_MAX);
+
 void bfs()
 {
     deque<int>q;
