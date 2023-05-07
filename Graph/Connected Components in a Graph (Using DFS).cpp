@@ -23,9 +23,9 @@ void dfs(ll vertex)
 }
 int main() {
     _ASRafi_
-	ll n,e,v1,v2;
-	cin>>n>>e;
-	for(ll i=0;i<e;i++)
+    ll n,e,v1,v2;
+    cin>>n>>e;
+    for(ll i=0;i<e;i++)
     {
         cin>>v1>>v2;
         g[v1].push_back(v2);
