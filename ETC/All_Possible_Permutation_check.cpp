@@ -39,6 +39,7 @@ void solve()
             cout << endl;
         }
     } while (next_permutation(all(v)));
+    
     return;
 }
 int main()
