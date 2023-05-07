@@ -17,44 +17,43 @@ using namespace std;
 
 void solve()
 {
-    ll t=1e2, n=6;
-    //cin >> n;
-    set<vector<ll>>s;
-    while(t--)
+    ll t = 1e2, n = 6;
+    cin >> n;
+    set<vector<ll>> s;
+    while (t--)
     {
-        vector<ll>v;
-        ll sum=0;
-        for(int i=0; i<n; i++)
+        vector<ll> v;
+        ll sum = 0, x;
+        for (int i = 0; i < n; i++)
         {
-            ll x;
             do
             {
-                x=(rand()%n)+1;
-            } while(find(all(v),x)!=v.end());
+                x = (rand() % n) + 1;
+                // Conditions...
+            } while (find(all(v), x) != v.end());
 
-            sum+=x;
-            sum%=n;
+            sum += x;
+            sum %= n;
             v.pb(x);
         }
-        //coutall(v);
-        if(n==v.size())
+        // coutall(v);
+        if (n == v.size())
         {
-           s.insert(v);
+            s.insert(v);
         }
     }
-    for(auto i: s)
+    for (auto i : s)
     {
-        cout<<"=> ";
-        for(auto j: i) cout<<j<<" ";
-        cout<<endl;
+        cout << "=> ";
+        for (auto j : i) cout << j << " ";
+        cout << endl;
     }
     return;
 }
 int main()
 {
-    _ASRafi__;
-    int tc=1;
-    cin>>tc;
-    while(tc--) solve();
+    int tc = 1;
+    cin >> tc;
+    while (tc--) solve();
     return 0;
 }
