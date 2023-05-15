@@ -1,14 +1,16 @@
+// Time Complexity: O(q * log(N)) 
 #include <bits/stdc++.h>
 #define endl '\n'
 using ll = long long;
 using namespace std;
 
+/* 1'base indexing */
 const int N = 3e5 + 9;
-ll bit1[N]; // 1'base indexing
+ll bit1[N]; 
 ll bit2[N];
-ll n;
+int n;
 
-void update(int i, int x, ll *bit)
+void update(int i, int x, ll *bit)	// O(logn)
 {
 	while (i <= n)
 	{
@@ -17,7 +19,7 @@ void update(int i, int x, ll *bit)
 	}
 }
 
-ll sum(int i, ll *bit)
+ll sum(int i, ll *bit)	//O(logn)
 {
 	ll ans = 0;
 	while (i != 0 && i > 0)
@@ -41,8 +43,9 @@ ll rsum(int l, int r)
 {
 	ll sum1 = sum(r, bit1) * r - sum(r, bit2); // Sum of elements in [1, r]
     ll sum2 = sum(l-1, bit1) * (l-1) - sum(l-1, bit2); // Sum of elements in [1, l-1]
-    return sum1 - sum2; // Sum of elements in [l,r] = Sum of elements in [0,r] - Sum of elements in [1, l-1]
+    return sum1 - sum2; // Sum of elements in [l,r] = Sum of elements in [1,r] - Sum of elements in [1, l-1]
 }
+
 void reset()
 {
 	for (int i = 0; i < N; i++)
