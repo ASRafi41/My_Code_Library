@@ -8,9 +8,9 @@ using namespace std;
 const int N = 3e5 + 9;
 ll bit1[N]; 
 ll bit2[N];
-int n;
+ll n;
 
-void update(int i, int x, ll *bit)	// O(logn)
+void update(ll i, ll x, ll *bit)	// O(logn)
 {
 	while (i <= n)
 	{
@@ -19,7 +19,7 @@ void update(int i, int x, ll *bit)	// O(logn)
 	}
 }
 
-ll sum(int i, ll *bit)	//O(logn)
+ll sum(ll i, ll *bit)	//O(logn)
 {
 	ll ans = 0;
 	while (i != 0 && i > 0)
@@ -30,7 +30,7 @@ ll sum(int i, ll *bit)	//O(logn)
 	return ans;
 }
 
-void rupdate(int l, int r, int val)
+void rupdate(ll l, ll r, ll val)
 {
 	update(l, val, bit1);
 	update(r + 1, -val, bit1);
@@ -39,7 +39,7 @@ void rupdate(int l, int r, int val)
 	update(r + 1, -val * r, bit2);
 }
 
-ll rsum(int l, int r)
+ll rsum(ll l, ll r)
 {
 	ll sum1 = sum(r, bit1) * r - sum(r, bit2); // Sum of elements in [1, r]
     ll sum2 = sum(l-1, bit1) * (l-1) - sum(l-1, bit2); // Sum of elements in [1, l-1]
@@ -56,10 +56,10 @@ void solve()
 {
     int q;
     cin >> n >> q;
-    int a[n + 10];
+    ll a[n + 10];
     for (int i = 1; i <= n; i++)
     {
-        int x; cin >> x;
+        ll x; cin >> x;
         a[i] = x;
         rupdate(i, i, x);
     }
@@ -69,7 +69,7 @@ void solve()
         cin >> type;
         if (type == 1)
         {
-            int i;
+            ll i;
             cin >> i;
             cout << a[i + 1] << endl;
             rupdate(i + 1, i + 1, -a[i + 1]);
@@ -77,14 +77,14 @@ void solve()
         }
         else if (type == 2)
         {
-            int i, v;
+            ll i, v;
             cin >> i >> v;
             a[i + 1] = a[i + 1] + v;
             rupdate(i + 1, i + 1, v);
         }
         else
         {
-            int i, j;
+            ll i, j;
             cin >> i >> j;
             cout << rsum(i + 1, j + 1) << endl;
         }
