@@ -4,11 +4,9 @@ struct node
 {
     node *next[26];
     bool completedWord;
-    int cnt;
     node()
     {
         completedWord = false;
-        cnt = 0;
         for (int i = 0; i < 26; i++)
             next[i] = NULL;
     }
@@ -42,7 +40,7 @@ bool trieSearch(string s)
     }
     return cur->completedWord;
 }
-void reset(node* cur)   //delete tree every Test Case for memory efficacy
+void reset(node* cur)   //Delete the tree after every test case for memory efficiency
 {
     for(int i=0; i<26; i++)
         if(cur->next[i]) 
@@ -74,4 +72,5 @@ int main()
         }
         reset(root);
     }
+    return 0;
 }
