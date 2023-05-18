@@ -26,8 +26,8 @@ ll query(ll i, ll *bit)	//O(logn)
 	while (i > 0)
 	{
 		sum += bit[i];
-		i = (i & (i - 1));
-	}
+        i -= (i & (-i));
+    }
 	return sum;
 }
 
