@@ -15,45 +15,27 @@ typedef long long  ll;
 #define _ASRafi__  ios::sync_with_stdio(false);cin.tie(0),cin.tie(0);
 using namespace std;
 
-void solve()
+int lowerval, upperVal;
+int randomize() // function to generate random numbers in range [lowerval - upperVal] 
 {
-    ll t = 1e2, n = 6;
-    cin >> n;
-    set<vector<ll>> s;
-    while (t--)
-    {
-        vector<ll> v;
-        ll sum = 0, x;
-        for (int i = 0; i < n; i++)
-        {
-            do
-            {
-                x = (rand() % n) + 1;
-                // Conditions...
-            } while (find(all(v), x) != v.end());
-
-            sum += x;
-            sum %= n;
-            v.pb(x);
-        }
-        // coutall(v);
-        if (n == v.size())
-        {
-            s.insert(v);
-        }
-    }
-    for (auto i : s)
-    {
-        cout << "=> ";
-        for (auto j : i) cout << j << " ";
-        cout << endl;
-    }
-    return;
+    return (rand() % (upperVal - lowerval + 1)) + lowerval;
 }
+
 int main()
 {
-    int tc = 1;
-    cin >> tc;
-    while (tc--) solve();
+    srand(time(NULL)); // for different values each time we run the code
+
+    int n = 10;
+    // cin>>n;
+
+    vector<int> vec(n);
+
+    lowerval = 1, upperVal = 100;
+    generate(vec.begin(), vec.end(), randomize);
+
+    // displaying the content of vector
+    for (int i = 0; i < vec.size(); i++)
+        cout << vec[i] << " ";
+
     return 0;
 }
