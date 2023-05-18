@@ -2,6 +2,7 @@
 #include <bits/stdc++.h>
 #define endl '\n'
 using ll = long long;
+#define _ASRafi__  ios::sync_with_stdio(false);cin.tie(0),cin.tie(0);
 using namespace std;
 
 /* 1'base indexing */
@@ -12,22 +13,22 @@ ll n;
 
 void update(ll i, ll x, ll *bit)	// O(logn)
 {
-	while (i <= n)
+	while (i < N)
 	{
 		bit[i] += x;
-		i = i + (i & (-i));
+		i += (i & (-i));
 	}
 }
 
-ll sum(ll i, ll *bit)	//O(logn)
+ll query(ll i, ll *bit)	//O(logn)
 {
-	ll ans = 0;
-	while (i != 0 && i > 0)
+	ll sum = 0;
+	while (i > 0)
 	{
-		ans += bit[i];
+		sum += bit[i];
 		i = (i & (i - 1));
 	}
-	return ans;
+	return sum;
 }
 
 void rupdate(ll l, ll r, ll val)
@@ -39,10 +40,10 @@ void rupdate(ll l, ll r, ll val)
 	update(r + 1, -val * r, bit2);
 }
 
-ll rsum(ll l, ll r)
+ll rquery(ll l, ll r)
 {
-	ll sum1 = sum(r, bit1) * r - sum(r, bit2); // Sum of elements in [1, r]
-    ll sum2 = sum(l-1, bit1) * (l-1) - sum(l-1, bit2); // Sum of elements in [1, l-1]
+	ll sum1 = query(r, bit1) * r - query(r, bit2); // Sum of elements in [1, r]
+    ll sum2 = query(l-1, bit1) * (l-1) - query(l-1, bit2); // Sum of elements in [1, l-1]
     return sum1 - sum2; // Sum of elements in [l,r] = Sum of elements in [1,r] - Sum of elements in [1, l-1]
 }
 
@@ -86,7 +87,7 @@ void solve()
         {
             ll i, j;
             cin >> i >> j;
-            cout << rsum(i + 1, j + 1) << endl;
+            cout << rquery(i + 1, j + 1) << endl;
         }
     }
 	return;
@@ -94,13 +95,14 @@ void solve()
 
 int main()
 {
-	int tc=1;
-    cin>>tc;
-    for(int i=1; i<=tc; i++)
-    {
-        reset();
-        cout<<"Case "<<i<<":\n";
-        solve();
-    }
-    return 0;
+	_ASRafi__;
+	int tc = 1;
+	cin >> tc;
+	for (int i = 1; i <= tc; i++)
+	{
+		reset();
+		cout << "Case " << i << ":\n";
+		solve();
+	}
+	return 0;
 }
