@@ -26,8 +26,8 @@ ll query(ll i, ll *bit)	//O(logn)
 	while (i > 0)
 	{
 		sum += bit[i];
-        i -= (i & (-i));
-    }
+        	i -= (i & (-i));
+    	}
 	return sum;
 }
 
@@ -43,8 +43,8 @@ void rupdate(ll l, ll r, ll val)
 ll rquery(ll l, ll r)
 {
 	ll sum1 = query(r, bit1) * r - query(r, bit2); // Sum of elements in [1, r]
-    ll sum2 = query(l-1, bit1) * (l-1) - query(l-1, bit2); // Sum of elements in [1, l-1]
-    return sum1 - sum2; // Sum of elements in [l,r] = Sum of elements in [1,r] - Sum of elements in [1, l-1]
+    	ll sum2 = query(l-1, bit1) * (l-1) - query(l-1, bit2); // Sum of elements in [1, l-1]
+    	return sum1 - sum2; // Sum of elements in [l,r] = Sum of elements in [1,r] - Sum of elements in [1, l-1]
 }
 
 void reset()
