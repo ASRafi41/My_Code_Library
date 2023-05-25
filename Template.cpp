@@ -56,7 +56,7 @@ void solve()
     
     return;
 }
-int main()
+int32_t main()
 {
     _ASRafi__;
     /* #ifndef ONLINE_JUDGE
