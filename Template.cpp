@@ -12,6 +12,7 @@ typedef long long       ll;
 #define no              cout<<"NO\n"
 #define all(x)          x.begin(),x.end()
 #define allr(x)         x.rbegin(),x.rend()
+#define Unique(x)       (x).erase(unique(all(x)),(x).end())
 #define CheckBit(x,k)   (x & (1LL << k))
 #define SetBit(x,k)     (x |= (1LL << k))
 #define ClearBit(x,k)   (x &= ~(1LL << k))
