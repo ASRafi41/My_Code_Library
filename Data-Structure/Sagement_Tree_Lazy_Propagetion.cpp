@@ -1,84 +1,95 @@
 #include <bits/stdc++.h>
+using ll = long long;
 using namespace std;
-typedef long long ll;
-#define endl '\n'
 
-const int N = 1e5 + 10;
-ll a[N], tree[4 * N], lazy[4 * N];
-
-void Propagate(int node, int st, int en)
+const int N = 5e5 + 9;
+int a[N];
+struct ST
 {
-    if (lazy[node] == -1 || st==en) return;
-    //carefully handle this conditions
-    tree[node * 2] = lazy[node];
-    lazy[node * 2] = lazy[node];
-
-    tree[node * 2 + 1] = lazy[node];
-    lazy[node * 2 + 1] = lazy[node];
-
-    tree[node]=0;
-    lazy[node] = -1;
-}
-void build(int node, int start, int end)
-{
-    if (start == end)
+    #define lc (n << 1)
+    #define rc ((n << 1) | 1)
+    ll t[4 * N], lazy[4 * N];
+    ST()
     {
-        tree[node] = a[start];
+        for (int i = 0; i < 4 * N; i++)
+            t[i] = lazy[i] = 0;
     }
-    else
+    inline void push(int n, int st, int en)
     {
-        int mid = (start + end) / 2;
-        build(2 * node, start, mid);
-        build(2 * node + 1, mid + 1, end);
-        tree[node] = tree[2 * node] + tree[2 * node + 1];
+        if (lazy[n] == 0) return;
+        t[n] = t[n] + lazy[n] * (en - st + 1);
+        if (st != en)
+        {
+            lazy[lc] = lazy[lc] + lazy[n];
+            lazy[rc] = lazy[rc] + lazy[n];
+        }
+        lazy[n] = 0;
     }
-}
-ll query(int node, int start, int end, int l, int r, ll propVal = 0)
-{
-    if (start > r || end < l) return 0;
-    if (start >= l && end <= r)
+    inline void pull(int n)
     {
-        return tree[node] + ((end - start + 1) * propVal);
+        t[n] = t[lc] + t[rc];
     }
-    int mid = (start + end) / 2;
-    ll p1 = query(2 * node, start, mid, l, r, propVal + lazy[node]);
-    ll p2 = query(2 * node + 1, mid + 1, end, l, r, propVal + lazy[node]);
-    return p1 + p2;
-}
-void update(int node, int start, int end, int l, int r, int val)
-{
-    if (start > r || end < l) return;
-    if (start >= l && end <= r)
+    void build(int n, int st, int en)
     {
-        tree[node] += (end - start + 1) * val;
-        lazy[node] += val;
-        return;
+        lazy[n] = 0;
+        if (st == en)
+        {
+            t[n] = a[st];
+            return;
+        }
+        int mid = (st + en) >> 1;
+        build(lc, st, mid);
+        build(rc, mid + 1, en);
+        pull(n);
     }
-    int mid = (start + end) / 2;
-    update(2 * node, start, mid, l, r, val);
-    update(2 * node + 1, mid + 1, end, l, r, val);
-    tree[node] = tree[2 * node] + tree[2 * node + 1] + ((end - start + 1) * lazy[node]);
-}
+    void update(int n, int st, int en, int l, int r, ll v)
+    {
+        push(n, st, en);  // push the value left and right child
+        if (r < st || en < l) return;
+        if (l <= st && en <= r)
+        {
+            lazy[n] = v; // set lazy
+            push(n, st, en);
+            return;
+        }
+        int mid = (st + en) >> 1;
+        update(lc, st, mid, l, r, v);
+        update(rc, mid + 1, en, l, r, v);
+        pull(n);
+    }
+    inline ll combine(ll a, ll b)
+    {
+        return a + b;
+    }
+    ll query(int n, int st, int en, int l, int r)
+    {
+        push(n, st, en);
+        if (l > en || st > r) return 0; // return null
+        if (l <= st && en <= r) return t[n];
+        int mid = (st + en) >> 1;
+        return combine(query(lc, st, mid, l, r), query(rc, mid + 1, en, l, r));
+    }
+} st;
 
-int main()
+int32_t main()
 {
-    int n, q;
+    int n, q, l, r, v;
     cin >> n >> q;
-    for (int i = 0; i < n; i++) cin >> a[i];
-    build(1, 0, n - 1);
-    for (int i = 1; i <= q; i++)
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    st.build(1, 1, n); // Building the Segment tree
+    while (q--)
     {
-        int type, l, r;
-        cin >> type >> l >> r;
+        int type;
+        cin >> type;
         if (type == 1)
         {
-            int val;
-            cin >> val;
-            update(1, 0, n - 1, l - 1, r - 1, val);
+            cin >> l >> r >> v;
+            st.update(1, 1, n, l, r, v);
         }
         else
         {
-            cout << query(1, 0, n - 1, l , r) << endl;
+            cin >> l >> r;
+            cout << st.query(1, 1, n, l, r) << endl;
         }
     }
     return 0;
