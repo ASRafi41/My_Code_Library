@@ -12,5 +12,5 @@ int main()
     
     /* if array size if N then the memory
     occupied by the array will be = (N * DataType byte) / 10^6;
-    for example : if N = 10^8 array is int arr[N] then, memory=(10^8 * 4) / 10^6 = 400Mb */
+    for example : if N = 10^8 array is int arr[N] then, memory = (10^8 * 4) / 10^6 = 400Mb; */
 }
