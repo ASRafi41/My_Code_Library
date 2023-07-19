@@ -28,7 +28,7 @@ void generatePower() // Storing the power of the Base.
 }
 struct Hashing
 {
-    pair<ll, ll> prefix[N], suffix[N];
+    vector<pair<ll, ll>> prefix, suffix;
     int n;
     void generatePrefixHash(string &s)
     {
@@ -81,6 +81,7 @@ struct Hashing
     void build(string &s)
     {
         n = s.size();
+        prefix.resize(n), suffix.resize(n);
         generatePrefixHash(s);
         // generateSuffixHash(s);
         if (!isCalPow) generatePower(), isCalPow = 1;
