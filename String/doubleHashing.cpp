@@ -7,6 +7,17 @@ using ll = long long;
 #define endl '\n'
 #define _ASRafi__ ios::sync_with_stdio(false);cin.tie(0),cin.tie(0);
 
+struct pair_hash // Compare the functions for gp_hash_table and unordered_map.
+{ 
+    template <typename T, typename U>
+    size_t operator()(const pair<T, U> &p) const
+    {
+        auto hash1 = hash<T>{}(p.first);
+        auto hash2 = hash<U>{}(p.second);
+        return hash1 ^ hash2;
+    }
+};
+
 // collusion rate = 1 / MOD; if i use double hashing collusion rate will be 1 / (MOD1 * MOD2);
 // const __int128 MOD = 202206214218227; // More efficient module for the __int128 datatype
 // const ll mod1 = 1e9 + 7, mod2 = 1e9 + 9; // You can use those mods.
