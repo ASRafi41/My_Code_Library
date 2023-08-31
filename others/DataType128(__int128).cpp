@@ -1,21 +1,8 @@
 #include <bits/stdc++.h>
-typedef long long       ll;
-#define endl            '\n'
-#define F               first
-#define S               second
-#define pb              push_back
-#define ppb             pop_back
-#define pll             pair<ll,ll>
-#define yes             cout<<"YES\n"
-#define no              cout<<"NO\n"
-#define all(x)          x.begin(),x.end()
-#define allr(x)         x.rbegin(),x.rend()
-#define error1(x)       cerr << #x << " = " << (x) <<endl
-#define error2(a,b)     cerr<<"( "<<#a<<" , "<<#b<<" ) = ( "<<(a)<<" , "<<(b)<<" )\n";
-#define coutall(v)      for(auto &it: v) cout<<it<<' '; cout<<endl;
-#define _ASRafi__       ios::sync_with_stdio(false);cin.tie(0),cin.tie(0);
 using namespace std;
+
 //--------------__int128---------------------
+
 __int128 read()
 {
     __int128 x = 0, f = 1;
