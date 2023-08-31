@@ -1,4 +1,4 @@
-// CPP program to calculate nPr
+// CPP program to calculate nPr => O(N)
 #include<bits/stdc++.h>
 using namespace std;
 typedef long long ll;
