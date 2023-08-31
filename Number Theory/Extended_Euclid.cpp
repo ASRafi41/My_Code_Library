@@ -27,6 +27,6 @@ int32_t main()
     ll a, b, x, y, gcd;
     cin >> a >> b; // 55, 80
     gcd = extended_euclid(a, b, x, y);
-    cout << x << " " << y << " " << gcd << endl;
+    cout << x << " " << y << " " << gcd << endl; // 3, -2, 5
     return 0;
 }
