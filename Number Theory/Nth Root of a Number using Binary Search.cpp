@@ -17,7 +17,7 @@ double BinExpPow(double n, int x)
 int main()
 {
     double n; int x;
-    cin >> n >> x;
+    cin >> n >> x;    // N^(1/x)
     cout << fixed << setprecision(10) << BinExpPow(n, x) << endl;
     return 0;
 }
