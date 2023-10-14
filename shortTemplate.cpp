@@ -4,15 +4,14 @@ typedef long long   ll;
 #define F           first
 #define S           second
 #define pb          push_back
-#define ppb         pop_back
 #define yes         cout<<"YES\n"
 #define no          cout<<"NO\n"
 #define all(x)      x.begin(),x.end()
 #define allr(x)     x.rbegin(),x.rend()
-#define error1(x)   cerr << #x << " = " << (x) <<endl
-#define error2(a,b) cerr<<"( "<<#a<<" , "<<#b<<" ) = ( "<<(a)<<" , "<<(b)<<" )\n";
-#define coutall(v)  for(auto &it: v) cout<<it<<' '; cout<<endl;
-#define _ASRafi__   ios::sync_with_stdio(false);cin.tie(0),cin.tie(0);
+#define error1(x)   cerr<<#x<<" = "<<(x)<<endl
+#define error2(a,b) cerr<<"("<<#a<<", "<<#b<<") = ("<<(a)<<", "<<(b)<<")\n";
+#define coutall(v)  for(auto &it: v) cout<<it<<" "; cout<<endl;
+#define _ASRafi__   ios::sync_with_stdio(false); cin.tie(0);
 using namespace std;
 
 void solve()
@@ -35,6 +34,10 @@ int32_t main()
     _ASRafi__;
     int tc = 1;
     cin >> tc;
-    while (tc--) solve();
+    for (int t = 1; t <= tc; t++)
+    {
+        // cout << "Case " << t << ": ";
+        solve();
+    }
     return 0;
 }
