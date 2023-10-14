@@ -27,17 +27,17 @@ typedef long double   ld; // %Lf
 using namespace std;
 using namespace __gnu_pbds;
 
-template <typename T, typename U> T ceil(T x, U y) {return (x > 0 ? (x + y - 1) / y : x / y);}
-template <typename T, typename U> T floor(T x, U y) {return (x > 0 ? x / y : (x - y + 1) / y);}
-
-template <typename T> using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-template <typename T, typename R> using ordered_map = tree<T, R, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count()); // mt19937_64 (long long)
 auto my_rand(long long l,long long r)   // random value generator [l, r]
 {
     return uniform_int_distribution<long long>(l,r)(rng);
 }
+
+template <typename T, typename U> T ceil(T x, U y) {return (x > 0 ? (x + y - 1) / y : x / y);}
+template <typename T, typename U> T floor(T x, U y) {return (x > 0 ? x / y : (x - y + 1) / y);}
+
+template <typename T> using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template <typename T, typename R> using ordered_map = tree<T, R, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 // const int fx[] = {+0, +0, +1, -1, -1, +1, -1, +1}; // king's move(0 to 3 index=> Side Moves)
 // const int fy[] = {-1, +1, +0, +0, +1, +1, -1, -1}; // king's move(4 to 7 index=> Diagonal Moves)
@@ -71,6 +71,7 @@ int32_t main()
         // freopen("output.txt", "w", stdout);
         // freopen("error.txt", "w", stderr);
     #endif
+
     int tc = 1;
     cin >> tc;
     for (int t = 1; t <= tc; t++)
