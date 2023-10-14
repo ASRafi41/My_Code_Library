@@ -8,20 +8,13 @@ using namespace std;
 const int N = 1e5 + 10;
 int par[N];
 int Size[N];
-multiset<int> grpSize;
 
 int Find(int v) // returns the representative of the set that contains the element v
 {
     if (par[v] == v) return v;
     return par[v] = Find(par[v]); // Path Compression
 }
-void margeGrpSize(int repU, int repV)
-{
-    grpSize.erase(grpSize.find(Size[repU]));
-    grpSize.erase(grpSize.find(Size[repV]));
 
-    grpSize.insert(Size[repU] + Size[repV]);
-}
 void Union(int u, int v) // merges the two specified sets(u & v)
 {
     int repU = Find(u);
@@ -30,20 +23,41 @@ void Union(int u, int v) // merges the two specified sets(u & v)
     {
         if (Size[repU] < Size[repV]) swap(repU, repV); // Union by size
         par[repV] = repU;
-        //margeGrpSize(repU, repV);
         Size[repU] += Size[repV];
     }
 }
+
+int get_size(int i)
+{
+    return Size[Find(i)];
+}
+
+void numberOfConnectedComponents(int n)
+{
+    int ct = 0;
+    for (int i = 1; i <= n; ++i)
+    {
+        if (Find(i) == i) ++ct;
+    }
+    cout << ct << endl;
+}
+
+void build(int n)
+{
+    for (int i = 0; i <= n; i++) 
+    {
+        par[i] = i;
+        Size[i] = 1;
+    }
+}
+
 int main()
 {
     int u, v, tc, n, k;
     cin >> n >> k;
-    for (int i = 0; i <= n; i++) // Create a new set
-    {
-        par[i] = i;
-        Size[i] = 1;
-        //grpSize.insert(1);
-    }
+    
+    build(n); // Create a new set
+
     bool cycle = 0;
     for (int i = 1; i <= k; i++)
     {
@@ -54,13 +68,8 @@ int main()
         Union(u, v);
     }
     // if(cycle) cout<<"Found Cycle";
+    
+    numberOfConnectedComponents(n); // Count Connected Components
 
-    /* //Count Connected Components
-    int ct = 0;
-    for (int i = 1; i <= n; ++i)
-    {
-        if (Find(i) == i) ++ct;
-    }
-    cout << ct << endl; */
     return 0;
 }
