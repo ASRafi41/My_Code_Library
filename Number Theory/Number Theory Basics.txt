@@ -1,0 +1,39 @@
+Source : Video of YouKnowWho
+Important Points : 
+
+1) Divisor count of a number = first we will break the number into its prime factorization
+   for example : n=p^a * q^b * r^c than divisor count=(a+1)*(b+1)*(c+1)
+   12=2^2*3^1;divisor count=(2+1)*(1+1)=6
+
+2) A number which has exactly two divisor = prime number
+
+3) numbers that has exactly three divisor = p^2(p means a prime number),(that means if someone asked you to find the numbers that has exactly 3 divisor upto N then you will use a loop up to N and find every prime and check whether it's square is less than N or not.)
+
+4) numbers that has exactly Four divisor = p^3,p^1*q^1;
+
+5) Higest divisor count of a number upto N will be cube root of N;(for example higest divisor of 10^9 is approximately 3sqrt(n)=1000) 
+
+6) sum of all divisor of a number from prime factorization = suppose a number n = p^a * q^b * r^c----
+   then sum of all divisor will be = ((p^(a+1))-1/p-1)*((q^(b+1)-1)/q-1)*((r^(c+1)-1)/r-1)----
+
+7) The maximum Gap between two prime is log(n)^2.suppose n=1e^9 then the next prime from n can be found approximately after log(1e9)^2=900
+
+8) by default __gcd function of compiler time complexity is log(n) so we will use this for finding gcd of two number
+
+9) lcm = (a * b) / gcd;
+
+10) Common multiple of two number a and b are the multiple of their lcm.
+
+11) Common divisor of two number a and b are the divisor of their gcd.
+
+12) (a+b),(a-b) is divisible by the gcd of a,b 
+
+13) Every two consecutive numbers are coprime
+
+14) if their is a grid of n,m length then the maximum square length that cover the whole grid will be gcd(n,m)
+
+15) trailing zeros of a number n=2^a * 5^b *....... will be min(a,b).for example
+    145000=2^3 * 5^4 * 29^1(prime factorization) then trailing zeros =min(3,4)=3;
+   
+16) a^p % mod == (a-mod)^p % mod;
+17) Fermat's Little Theorem, a^(p-1) % p = 1;
