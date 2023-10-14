@@ -2,6 +2,8 @@
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 typedef long long     ll;
+//typedef __int128_t    lll;
+typedef long double   ld; // %Lf
 #define endl          '\n'
 #define F             first
 #define S             second
