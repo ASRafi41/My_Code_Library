@@ -68,9 +68,10 @@ ll Fact(ll n)
     if (n <= 1) return 1;
     return n * Fact(n - 1);
 }
-ll nPr(ll n, ll r)
+ll nPr(ll n, ll r) // O(r * r * log(n))
 {
-    return Fact(n) / Fact(n - r);
+    // return Fact(n) / Fact(n - r);
+    return nCr(n, r) * Fact(r);
 }
 // end
 
