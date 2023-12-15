@@ -71,7 +71,7 @@ ll Fact(ll n)
 ll nPr(ll n, ll r) // O(r * r * log(n))
 {
     // return Fact(n) / Fact(n - r);
-    return nCr(n, r) * Fact(r);
+    return nCr(n, r) * Fact(r); // nPr = nCr * r!
 }
 // end
 
