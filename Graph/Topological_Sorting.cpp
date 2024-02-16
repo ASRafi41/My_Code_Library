@@ -34,7 +34,7 @@ void topoSortDFS(int v, vector<vector<int>> &adj)
     stack<int> topo;
     vector<int> vis(v + 1, 0);
 
-    for (int i = 0; i <= v; i++)
+    for (int i = 1; i <= v; i++)
     {
         if (!vis[i]) topoSortDFS(i, topo, vis, adj);
     }
@@ -54,12 +54,12 @@ void topoSortBFS(int v, vector<vector<int>> &adj)
     queue<int> nodes;
     vector<int> inDeg(v + 1, 0);
     vector<int> ans; 
-    for (int i = 0; i <= v; i++)
+    for (int i = 1; i <= v; i++)
     {
         for (int j : adj[i]) inDeg[j]++;
     }
 
-    for (int i = 0; i <= v; i++)
+    for (int i = 1; i <= v; i++)
     {
         if (inDeg[i] == 0) nodes.push(i);
     }
@@ -108,11 +108,13 @@ int32_t main()
 
 /*
 6 6
+6 3
+6 1
+5 1
 5 2
-5 0
-4 0
-4 1
-2 3
-3 1
-Topological Sort of the given graph: 5 4 2 3 1 0
+3 4
+4 2
+Topological Sort of the given graph: 
+6 5 3 4 2 1 
+5 6 3 1 4 2
 */
