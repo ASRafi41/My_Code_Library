@@ -1,71 +1,79 @@
-#include <iostream>
-#include <vector>
-#include <set>
+#include <bits/stdc++.h>
+using ll = long long;
 using namespace std;
-//=> Time Complexity=(V+ E*Log(V))
-const int N = 1e5 + 10, INF = 1e9 + 7;
-vector<pair<int, int>> g[N];
-vector<int> dist(N, INF);
-vector<bool> vis(N);
 
-void dijkstra(int s)
+//=> Time Complexity = (V + E) * Log(V)
+
+const int INF = LLONG_MAX;
+vector<vector<pair<int, int>>> g;
+
+void dijkstra(int s, vector<ll> &d, vector<ll> &p)
 {
-    multiset<pair<int, int>> st;
-    st.insert({0, s});
-    dist[s] = 0;
+    int n = g.size();
+    d.assign(n, INF);
+    p.assign(n, -1);
 
-    while (st.size())
+    d[s] = 0;
+    priority_queue<pair<ll, ll>, vector<pair<ll, ll>>, greater<pair<ll, ll>>> q;
+    q.push({0, s});
+    
+    while (!q.empty())
     {
-        int u = (st.begin())->second;
-        // int u_w=(st.begin())->first;
-        st.erase(st.begin());
-        if (vis[u]) continue;
-        vis[u] = 1;
-        for (auto &child : g[u])
+        auto [d_v, v] = q.top();
+        q.pop();
+        if (d_v != d[v]) continue;
+        for (auto &[to, len] : g[v])
         {
-            int v = child.first;
-            int v_w = child.second;
-            if (dist[u] + v_w < dist[v])
+            if (d[v] + len < d[to])
             {
-                dist[v] = dist[u] + v_w;
-                st.insert({dist[v], v});
+                d[to] = d[v] + len;
+                p[to] = v;
+                q.push({d[to], to});
             }
         }
     }
 }
+
+vector<int> restore_path(int s, int dest, vector<ll> const &p)
+{
+    vector<int> path;
+
+    for (int v = dest; v != s; v = p[v]) path.push_back(v);
+    path.push_back(s);
+
+    reverse(path.begin(), path.end());
+    return path;
+}
+
 int main()
 {
-    int n, m;
+    int n, m, source = 1;
     cin >> n >> m;
+    g.resize(n + 1);
     for (int i = 0; i < m; i++)
     {
         int u, v, w;
         cin >> u >> v >> w;
         g[u].push_back({v, w});
     }
-    // for(int i=1;i<=6;i++)
+    // Print List
+    // for (int i = 1; i <= n; i++)
     // {
-    //     cout<<i<<"=> ";
-    //     for(auto &j: g[i]) cout<<j.first<<" "<<j.second<<", ";
-    //     cout<<endl;
+    //     cout << i << "=> ";
+    //     for (auto &j : g[i]) cout << '{' << j.first << ", " << j.second << "}, ";
+    //     cout << endl;
     // }
-    dijkstra(1);
-    cout << "Distrance=> ";
-    for (int i = 1; i <= 6; i++)
-        cout << dist[i] << ", ";
+
+    vector<ll> dist, Paths;
+    dijkstra(source, dist, Paths); // source 1
+
+    cout << "-> Distance <-" << endl;
+    for (int i = 1; i <= n; i++) cout << source << " to " << i << " => " << dist[i] << endl;
+
+    cout << "-> Source to Destination Path <- " << endl;
+    int dest = 4;
+    auto path = restore_path(source, dest, Paths);
+    for(int i = 0; i < path.size(); i++) cout << path[i] << (i + 1 == path.size() ? "\n" : " -> ");
+
     return 0;
 }
-/*Test Case:
-6 9
-1 2 1
-1 3 5
-2 3 2
-2 4 2
-2 5 1
-3 5 2
-4 5 3
-4 6 1
-5 6 2
-
-Output:  Distrance=> 0, 1, 3, 3, 2, 4,
-*/
