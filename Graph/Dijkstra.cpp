@@ -2,9 +2,10 @@
 using ll = long long;
 using namespace std;
 
-//=> Time Complexity = (V + E) * Log(V)
+// Dijkstra's Algorithm - Used to find the shortest path between nodes in a graph with non-negative edge weights.
+// Time Complexity = (V + E) * Log(V)
 
-const ll INF = INT_MAX;
+const int INF = INT_MAX;
 vector<vector<pair<int, int>>> g;
 
 void dijkstra(int s, vector<ll> &d, vector<ll> &p)
@@ -56,7 +57,7 @@ int main()
         cin >> u >> v >> w;
         g[u].push_back({v, w});
     }
-    // Print List
+    // -- Print List --
     // for (int i = 1; i <= n; i++)
     // {
     //     cout << i << "=> ";
