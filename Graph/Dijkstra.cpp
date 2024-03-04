@@ -4,7 +4,7 @@ using namespace std;
 
 //=> Time Complexity = (V + E) * Log(V)
 
-const int INF = LLONG_MAX;
+const ll INF = LLONG_MAX;
 vector<vector<pair<int, int>>> g;
 
 void dijkstra(int s, vector<ll> &d, vector<ll> &p)
@@ -34,9 +34,9 @@ void dijkstra(int s, vector<ll> &d, vector<ll> &p)
     }
 }
 
-vector<int> restore_path(int s, int dest, vector<ll> const &p)
+vector<ll> restore_path(int s, int dest, vector<ll> const &p)
 {
-    vector<int> path;
+    vector<ll> path;
 
     for (int v = dest; v != s; v = p[v]) path.push_back(v);
     path.push_back(s);
@@ -56,6 +56,7 @@ int main()
         cin >> u >> v >> w;
         g[u].push_back({v, w});
     }
+    
     // Print List
     // for (int i = 1; i <= n; i++)
     // {
