@@ -1,6 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Bellman-Ford Algorithm - Used to find the shortest path between nodes in a graph with negative edge weights.
+// Bellman-Ford is Only capable of detecting negative cycles, and can't calculate the negative cycle distance
+// Time Complexity = V * E
+
 struct Edge
 {
     int source, destination, weight;
@@ -26,6 +30,19 @@ void bellmanFord(vector<Edge> &edges, int V, int E, int source)
                 distance[v] = distance[u] + weight;
                 predecessor[v] = u;
             }
+        }
+    }
+
+    // Check for negative cycles
+    for (int i = 0; i < E; i++)
+    {
+        int u = edges[i].source;
+        int v = edges[i].destination;
+        int weight = edges[i].weight;
+        if (distance[u] != INT_MAX && distance[u] + weight < distance[v])
+        {
+            cout << "Graph contains negative cycle!" << endl;
+            return;
         }
     }
 
