@@ -38,7 +38,7 @@ vector<ll> restore_path(int s, int dest, vector<ll> const &p)
 {
     vector<ll> path;
 
-    for (int v = dest; v != s; v = p[v]) path.push_back(v);
+    for (auto v = dest; v != s; v = p[v]) path.push_back(v);
     path.push_back(s);
 
     reverse(path.begin(), path.end());
