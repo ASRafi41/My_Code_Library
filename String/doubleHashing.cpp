@@ -1,44 +1,32 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
+#define endl '\n'
 using namespace std;
 using namespace __gnu_pbds;
 using ll = long long;
-#define endl '\n'
-#define _ASRafi__ ios::sync_with_stdio(false);cin.tie(0),cin.tie(0);
-
-struct pair_hash // Compare the functions for gp_hash_table and unordered_map.
-{ 
-    template <typename T, typename U>
-    size_t operator()(const pair<T, U> &p) const
-    {
-        auto hash1 = hash<T>{}(p.first);
-        auto hash2 = hash<U>{}(p.second);
-        return hash1 ^ hash2;
-    }
-};
 
 // collusion rate = 1 / MOD; if i use double hashing collusion rate will be 1 / (MOD1 * MOD2);
 // const __int128 MOD = 202206214218227; // More efficient module for the __int128 datatype
 // const ll mod1 = 1e9 + 7, mod2 = 1e9 + 9; // You can use those mods.
 
-const int N = 1e6 + 5;
+const int N = 1e6 + 7;
 const int Base1 = 137, Base2 = 277;
 const int mod1 = 127657753, mod2 = 987654319;
 
-bool isCalPow = 0;
 pair<ll, ll> po[N];
-void generatePower() // Storing the power of the Base.
-{
-    po[0].first = 1, po[0].second = 1;
-    for (int i = 1; i < N; i++)
-    {
-        po[i].first = (po[i - 1].first * Base1) % mod1;
-        po[i].second = (po[i - 1].second * Base2) % mod2;
-    }
-}
+
 struct Hashing
 {
+    void generatePower() // Storing the power of the Base.
+    {
+        po[0].first = 1, po[0].second = 1;
+        for (int i = 1; i < N; i++)
+        {
+            po[i].first = (po[i - 1].first * Base1) % mod1;
+            po[i].second = (po[i - 1].second * Base2) % mod2;
+        }
+    }
     vector<pair<ll, ll>> prefix, suffix;
     int n;
     void generatePrefixHash(string &s)
@@ -85,7 +73,7 @@ struct Hashing
         Hs.second = (suffix[l].second - (suffix[r + 1].second * po[r - l + 1].second % mod2) + mod2) % mod2;
         return Hs;
     }
-    pair<ll, ll> concat(pair<ll, ll> &hash1, pair<ll, ll> &hash2, int len)
+    pair<ll, ll> concat(pair<ll, ll> &hash1, pair<ll, ll> &hash2, int len) //len = 2nd string size
     {
         return {((hash1.first * po[len].first) + hash2.first) % mod1, ((hash1.second * po[len].second) + hash2.second) % mod2};
     }
@@ -95,7 +83,7 @@ struct Hashing
         prefix.resize(n), suffix.resize(n);
         generatePrefixHash(s);
         // generateSuffixHash(s);
-        if (!isCalPow) generatePower(), isCalPow = 1;
+        if (po[0].first != 1) generatePower();
     }
 } Hash;
 
@@ -118,11 +106,16 @@ void solve()
     }
     return;
 }
-int32_t main()
+
+signed main()
 {
-    _ASRafi__;
+    ios::sync_with_stdio(false); cin.tie(0);
     int tc = 1;
     // cin >> tc;
-    while (tc--) solve();
+    for(int t = 1; t <= tc; t++)
+    {
+        // cout << "Case " << t << ": ";
+        solve();
+    }
     return 0;
 }
