@@ -1,103 +1,96 @@
 #include<bits/stdc++.h>
-typedef long long  ll;
-#define endl       '\n'
-#define _ASRafi_   ios::sync_with_stdio(false);cin.tie(0),cin.tie(0);
+typedef long long ll;
+#define endl '\n'
+#define _ASRafi_ ios::sync_with_stdio(false);cin.tie(0),cin.tie(0);
 using namespace std;
 
-const int N = 1e5 + 10;
-int a[N];
-int tree[4 * N];
+const int N = 3e5 + 9;
+ll a[N];
+ll t[4 * N];
 
-void build(int node, int st, int en)
+void build(int node, int st, int en)    //=> O(N)
 {
-    if (st == en)
-    {
-        tree[node] = a[st];
+    if (st == en) {
+        t[node] = a[st];
         return;
     }
-    int mid = (st + en) / 2;
-    build(2 * node, st, mid);                         // divide left side
-    build(2 * node + 1, mid + 1, en);                 // divide right side
-    tree[node] = tree[2 * node] + tree[2 * node + 1]; // sum of left and right side
+    int mid = (st + en) >> 1;
+    build(2 * node, st, mid); // divide left side
+    build(2 * node + 1, mid + 1, en); // divide right side
+    // Merging left and right portion
+    auto &Cur = t[node];
+    auto &Left = t[2 * node];
+    auto &Right = t[2 * node + 1];
+    Cur = Left + Right;
 }
-int query(int node, int st, int en, int l, int r)
+ll query(int node, int st, int en, int l, int r)   //=> O(log n)
 {
     if (st > r || en < l) // No overlapping and out of range
     {
-        return 0;
+        return 0; // <== careful 
     }
     if (l <= st && en <= r) // Complete overlapped (l-r in range)
     {
-        return tree[node];
+        return t[node];
     }
     // Partial overlapping
-    int mid = (st + en) / 2;
-
-    int q1 = query(2 * node, st, mid, l, r);
-    int q2 = query(2 * node + 1, mid + 1, en, l, r);
-    return q1 + q2;
+    int mid = (st + en) >> 1;
+    auto Left = query(2 * node, st, mid, l, r);
+    auto Right = query(2 * node + 1, mid + 1, en, l, r);
+    return Left + Right;
 }
-void update(int node, int st, int en, int idx, int val)
+void update(int node, int st, int en, int idx, ll val) //=> O(log n)
 {
-    if (st == en)
-    {
+    if (st == en) {
         a[st] = val;
-        tree[node] = val;
+        t[node] = val;
         return;
     }
-    int mid = (st + en) / 2;
-    int left = 2 * node, right = 2 * node + 1;
-    if (idx <= mid) update(left, st, mid, idx, val);
-    else update(right, mid + 1, en, idx, val);
-    tree[node] = tree[left] + tree[right];
+    int mid = (st + en) >> 1;
+    if (idx <= mid) update(2 * node, st, mid, idx, val);
+    else update(2 * node + 1, mid + 1, en, idx, val);
+    // Merging left and right portion
+    auto &Cur = t[node];
+    auto &Left = t[2 * node];
+    auto &Right = t[2 * node + 1];
+    Cur = Left + Right;
 }
+
 void solve()
 {
-    ll n, q, k1, c = 0, ans = 0;
+    ll n, q;
     cin >> n >> q;
 
-    for (ll i = 0; i < n; i++)
+    for (int i = 1; i <= n; i++)
     {
-        ll x;
-        cin >> x;
+        ll x; cin >> x;
         a[i] = x;
     }
-    build(1, 0, n - 1); // Createing Segment tree;
+    build(1, 1, n); // Creating Segment tree;
     while (q--)
     {
-        int type;
-        cin >> type;
+        int type; cin >> type;
         if (type == 1)
         {
-            int i;
-            cin >> i;
-            cout << a[i] << endl;
-            update(1, 0, n - 1, i, 0);
-        }
-        else if (type == 2)
-        {
-            int i, val;
-            cin >> i >> val;
-            update(1, 0, n - 1, i, a[i] + val);
-            // cout<<tree[1]<<endl;
+            int i, val; cin >> i >> val;
+            update(1, 1, n, i, a[i] + val);
         }
         else
         {
-            int l, r;
-            cin >> l >> r;
-            cout << query(1, 0, n - 1, l, r) << endl;
+            int l, r; cin >> l >> r;
+            cout << query(1, 1, n, l, r) << endl;
         }
     }
     return;
 }
 int main()
 {
-    _ASRafi_
-    int tc=1;
-    cin>>tc;
-    for(int i=1; i<=tc; ++i)
+    _ASRafi_;
+    int tc = 1;
+    cin >> tc;
+    for (int i = 1; i <= tc; ++i)
     {
-        cout<<"Case "<<i<<":\n";
+        // cout << "Case " << i << ":\n";
         solve();
     }
     return 0;
