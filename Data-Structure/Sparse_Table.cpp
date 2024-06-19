@@ -4,21 +4,27 @@ using ll = long long;
 
 // 0-based indexing, query finds in range [first, last]
 const int N = 1e5 + 7;
-const int K = __lg(N);
+const int K = log2l(N) + 1;
 
 struct sparse_table
 {
     ll tr[N][K + 1];
-    ll f (auto p1, auto p2) { // Change this function depending on the question.
-        return (p1 + p2);
+
+    ll f(ll p1, ll p2) { // Change this function depending on the question.
+        return p1 + p2;
     }
-    void build(int n, vector<ll> &a) { // O(N * logN)
-        for (int i = 0; i < n; i++) tr[i][0] = a[i];
+
+    void build(int n, const vector<ll> &a) { // O(N * logN)
+        for (int i = 0; i < n; i++) {
+            tr[i][0] = a[i];
+        }
         for (int j = 1; j <= K; j++) {
-            for (int i = 0; i + (1 << j) <= n; i++)
+            for (int i = 0; i + (1 << j) <= n; i++) {
                 tr[i][j] = f(tr[i][j - 1], tr[i + (1 << (j - 1))][j - 1]);
+            }
         }
     }
+
     ll query1(int l, int r) { // find Sum, LCM => O(LogN)
         ll val = 0; // for sum => val = 0 and lcm => val = 1
         for (int j = K; j >= 0; j--) {
@@ -29,8 +35,9 @@ struct sparse_table
         }
         return val;
     }
+
     ll query2(int l, int r) { // find Min, Max, GCD, AND, OR, XOR => O(1)
-        int d = __lg(r - l + 1);
+        int d = log2(r - l + 1);
         return f(tr[l][d], tr[r - (1 << d) + 1][d]);
     }
 } spt;
