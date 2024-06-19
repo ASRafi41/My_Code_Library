@@ -3,11 +3,11 @@ using namespace std;
 using ll = long long;
 
 // 0-based indexing, query finds in range [first, last]
+#define lg(x) (31 - __builtin_clz(x))
 const int N = 1e5 + 7;
-const int K = log2l(N) + 1;
+const int K = lg(N);
 
-struct sparse_table
-{
+struct sparse_table {
     ll tr[N][K + 1];
 
     ll f(ll p1, ll p2) { // Change this function according to the problem.
@@ -37,7 +37,7 @@ struct sparse_table
     }
 
     ll query2(int l, int r) { // find Min, Max, GCD, AND, OR, XOR => O(1)
-        int d = log2l(r - l + 1);
+        int d = lg(r - l + 1);
         return f(tr[l][d], tr[r - (1 << d) + 1][d]);
     }
 } spt;
