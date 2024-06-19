@@ -10,7 +10,7 @@ struct sparse_table
 {
     ll tr[N][K + 1];
 
-    ll f(ll p1, ll p2) { // Change this function depending on the question.
+    ll f(ll p1, ll p2) { // Change this function according to the problem.
         return p1 + p2;
     }
 
@@ -37,7 +37,7 @@ struct sparse_table
     }
 
     ll query2(int l, int r) { // find Min, Max, GCD, AND, OR, XOR => O(1)
-        int d = log2(r - l + 1);
+        int d = log2l(r - l + 1);
         return f(tr[l][d], tr[r - (1 << d) + 1][d]);
     }
 } spt;
