@@ -5,10 +5,10 @@ using ll = long long;
 // 0-based indexing, query finds in range [first, last]
 const int N = 1e5 + 7;
 const int K = __lg(N);
-ll tr[N][K + 1];
 
 struct sparse_table
 {
+    ll tr[N][K + 1];
     ll f (auto p1, auto p2) { // Change this function depending on the question.
         return (p1 + p2);
     }
