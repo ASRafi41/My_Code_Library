@@ -54,7 +54,7 @@ struct Segment_Tree {
         auto Right = query(node << 1 | 1, mid + 1, en, l, r);
         return merge(Left, Right);
     }
-} sgt;
+} st;
 
 void solve() {
     ll n, q;
@@ -64,16 +64,16 @@ void solve() {
         ll x; cin >> x;
         v[i] = x;
     }
-    sgt.build(1, 1, n, v); // Creating Segment tree;
+    st.build(1, 1, n, v); // Creating Segment tree;
     while (q--) {
         short type; cin >> type;
         if (type == 1) {
             int i, val; cin >> i >> val;
-            sgt.update(1, 1, n, i, v[i] + val);
+            st.update(1, 1, n, i, v[i] + val);
         }
         else {
             int l, r; cin >> l >> r;
-            cout << sgt.query(1, 1, n, l, r) << endl;
+            cout << st.query(1, 1, n, l, r) << endl;
         }
     }
     return;
