@@ -70,6 +70,7 @@ void solve() {
         if (type == 1) {
             int i, val; cin >> i >> val;
             st.update(1, 1, n, i, v[i] + val);
+            v[i] += val;
         }
         else {
             int l, r; cin >> l >> r;
