@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
-typedef long long ll;
 #define endl '\n'
+using ll = long long;
 using namespace std;
 
 const int N = 3e5 + 9;
