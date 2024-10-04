@@ -43,7 +43,8 @@ struct Merge_Sort_Tree {
               make_move_iterator(Right.begin()), make_move_iterator(Right.end()),
               back_inserter(Cur));
     }
-    void update(int node, int st, int en, int idx, ll val) { //=> O(log N * log N)
+    // *** For update function, using set => O(log N * log N)
+    void update(int node, int st, int en, int idx, ll val) { //=> O(N)
         if (st == en) {
             t[node] = {val};
             return;
