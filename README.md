@@ -1,1 +1,2 @@
-Implementation of well-known algorithms and library
+Implementation of well-known algorithms and library.
+
