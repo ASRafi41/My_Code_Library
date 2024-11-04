@@ -1,108 +1,97 @@
-// Time Complexity: O(q * log(N)) 
-#include <bits/stdc++.h>
+// https://cses.fi/problemset/task/1137/
+#include<bits/stdc++.h>
 #define endl '\n'
-using ll = long long;
-#define _ASRafi__  ios::sync_with_stdio(false);cin.tie(0),cin.tie(0);
 using namespace std;
+using ll = long long;
+using ld = long double;
 
-/* 1'base indexing */
 const int N = 3e5 + 9;
-ll bit1[N]; 
-ll bit2[N];
-ll n;
 
-void update(ll i, ll x, ll *bit)	// O(logn)
-{
-	while (i < N)
-	{
-		bit[i] += x;
-		i += (i & (-i));
-	}
-}
+template <class T>
+struct BIT { // 1-indexed
+    int n;
+    vector<T> t;
+    BIT() {}
+    BIT(int _n) {
+        n = _n;
+        t.assign(n + 1, 0);
+    }
+    T query(int i) {
+        T ans = 0;
+        for (; i >= 1; i -= (i & -i)) ans += t[i];
+        return ans;
+    }
+    T query(int l, int r) {
+        return query(r) - query(l - 1);
+    }
+    void update(int i, T val) {
+        if (i <= 0) return;
+        for (; i <= n; i += (i & -i)) t[i] += val;
+    }
+    void update(int l, int r, T val) {
+        upd(l, val);
+        upd(r + 1, -val);
+    }
+};
 
-ll query(ll i, ll *bit)	//O(logn)
-{
-	ll sum = 0;
-	while (i > 0)
-	{
-		sum += bit[i];
-        	i -= (i & (-i));
-    	}
-	return sum;
-}
-
-void rupdate(ll l, ll r, ll val)
-{
-	update(l, val, bit1);
-	update(r + 1, -val, bit1);
-
-	update(l, val * (l - 1), bit2);
-	update(r + 1, -val * r, bit2);
-}
-
-ll rquery(ll l, ll r)
-{
-	ll sum1 = query(r, bit1) * r - query(r, bit2); // Sum of elements in [1, r]
-    	ll sum2 = query(l-1, bit1) * (l-1) - query(l-1, bit2); // Sum of elements in [1, l-1]
-    	return sum1 - sum2; // Sum of elements in [l,r] = Sum of elements in [1,r] - Sum of elements in [1, l-1]
-}
-
-void reset()
-{
-	for (int i = 0; i < N; i++)
-		bit1[i] = bit2[i] = 0;
-}
-
-void solve()
-{
-    int q;
+void solve() {
+    int n, q;
     cin >> n >> q;
-    ll a[n + 10];
-    for (int i = 1; i <= n; i++)
-    {
-        ll x; cin >> x;
-        a[i] = x;
-        rupdate(i, i, x);
+    vector<int> val(n + 1);
+    for(int i = 1; i <= n; i++) {
+        cin >> val[i];
     }
-    while (q--)
-    {
-        int type;
+    vector<vector<int>> g(n + 1);
+    int u, v;
+    for(int i = 1; i + 1 <= n; i++) {
+        cin >> u >> v;
+        g[u].push_back(v);
+        g[v].push_back(u);
+    }
+
+    vector<int> st(n + 1), en(n + 1);
+    int time = 0;
+
+    auto dfs = [&](auto&& self, int u, int par) -> void {
+        st[u] = ++time;
+        for(auto &v: g[u]) {
+            if(v == par) continue;
+            self(self, v, u);
+        }
+        en[u] = time;
+    };
+
+    dfs(dfs, 1, -1);
+    BIT<ll> bit1(n + 1); // <===
+    for(int i = 1; i <= n; i++) {
+        bit1.update(st[i], val[i]);
+    }
+
+    short type; 
+    int s, x;
+    while(q--) {
         cin >> type;
-        if (type == 1)
-        {
-            ll i;
-            cin >> i;
-            cout << a[i + 1] << endl;
-            rupdate(i + 1, i + 1, -a[i + 1]);
-            a[i + 1] = 0;
+        if(type == 1) {
+            cin >> s >> x;
+            bit1.update(st[s], -val[s]);
+            val[s] = x;
+            bit1.update(st[s], +val[s]);
         }
-        else if (type == 2)
-        {
-            ll i, v;
-            cin >> i >> v;
-            a[i + 1] = a[i + 1] + v;
-            rupdate(i + 1, i + 1, v);
-        }
-        else
-        {
-            ll i, j;
-            cin >> i >> j;
-            cout << rquery(i + 1, j + 1) << endl;
+        else {
+            cin >> s;
+            cout << bit1.query(st[s], en[s]) << endl;
         }
     }
-	return;
+    return;
 }
 
-int main()
-{
-	_ASRafi__;
-	int tc = 1;
-	cin >> tc;
-	for (int i = 1; i <= tc; i++)
-	{
-		reset();
-		cout << "Case " << i << ":\n";
-		solve();
-	}
-	return 0;
+signed main() {
+    ios::sync_with_stdio(false); cin.tie(0);
+    int tc = 1;
+    // cin >> tc;
+    for (int t = 1; t <= tc; t++) {
+        // cout << "Case " << t << ": ";
+        solve();
+    }
+    return 0;
 }
