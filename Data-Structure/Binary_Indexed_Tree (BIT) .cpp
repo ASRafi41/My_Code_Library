@@ -5,8 +5,6 @@ using namespace std;
 using ll = long long;
 using ld = long double;
 
-const int N = 3e5 + 9;
-
 template <class T>
 struct BIT { // 1-indexed
     int n;
