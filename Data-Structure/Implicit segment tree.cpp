@@ -43,11 +43,26 @@ class ImplicitSegmentTree {
         return combine(leftResult, rightResult);
     }
 
+    // Cleanup allocated nodes
+    void cleanup(Node*& node) {
+        if (!node) return;
+
+        cleanup(node->left);
+        cleanup(node->right);
+        delete node;
+        node = nullptr;
+    }
+
 public:
     // Constructor
     ImplicitSegmentTree(int startRange, int endRange, function<ll(ll, ll)> combine)
         : startRange(startRange), endRange(endRange), combine(combine) { root = nullptr; }
 
+    // Destructor
+    ~ImplicitSegmentTree() {
+        cleanup(root);
+    }
+    
     // Public update method
     void update(int pos, ll val) {
         update(root, startRange, endRange, pos, val);
