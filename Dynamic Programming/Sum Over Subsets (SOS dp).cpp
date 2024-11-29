@@ -13,6 +13,7 @@ void sum_over_supersets(vector<ll> &dp) { // adding element to all its super set
         for (int i = 0; i < MAXN; ++i) {
             if (i & (1 << bit)) {
                 dp[i] += dp[i ^ (1 << bit)];
+                // mx[i] = max(mx[i], mx[i ^ (1 << bit)]);
             }
         }
     }
