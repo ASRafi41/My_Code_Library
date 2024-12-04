@@ -2,8 +2,8 @@
 #define endl "\n"
 typedef long long ll;
 using namespace std;
-const int N = 3e5 + 7;
 
+const int N = 3e5 + 7;
 vector<vector<int>> g(N);
 int table[N + 1][22];
 int level[N];
@@ -11,7 +11,7 @@ int tin[N], tout[N];
 // int minLen[N + 1][22], maxLen[N + 1][22]; // maximum ans minimum weight of a graph
 int n, lg, Time = 0, INF = 1e9 + 10;
 
-void dfs(int v, int par = -1, int dep = 0, int mn = INF, int mx = -1) {
+void dfs(int v, int par = -1, int dep = 0) { // ,int mn = INF, int mx = -1
     tin[v] = ++Time;    // for find is_ancestor
     table[v][0] = par;
     level[v] = dep;
@@ -37,22 +37,29 @@ void lca_build(int root = 1) { //=> O(n * logn)
 
 int lca_query(int a, int b) { //=> O(logn)
     if (level[a] < level[b]) swap(a, b);
-    // int dis = level[a] - level[b];
-    // while (dis)  //a and b come to the same level
-    // {
-    //     int i = log2(dis);
+    // int dis = level[a] - level[b], mx = 0;
+    // while(dis) {
+    //     int i = log2l(dis);
+    //     mx = max(mx, maxLen[a][i]);
     //     a = table[a][i], dis -= (1 << i);
-    // } 
+    // }
     for (int i = lg; i >= 0; i--) {  //a and b come to the same level
         if (table[a][i] != -1 && level[table[a][i]] >= level[b])
             a = table[a][i];
     }
-    if (a == b) return a;
+    
+    if (a == b) return a; // return mx;
+
     for (int i = lg; i >= 0; i--) {
-        if (table[a][i] != -1 && table[a][i] != table[b][i])
+        if (table[a][i] != -1 && table[a][i] != table[b][i]) {
+            // mx = max(mx, maxLen[a][i]);
+            // mx = max(mx, maxLen[b][i]);
             a = table[a][i], b = table[b][i];
+        }
     }
-    return table[a][0];
+    // mx = max(mx, maxLen[a][0]);
+    // mx = max(mx, maxLen[b][0]);
+    return table[a][0]; // return mx;
 }
 
 int dist(int u, int v) { // distance between two node
@@ -90,7 +97,7 @@ void reset() {
 int main() {
     ios::sync_with_stdio(false); cin.tie(0);
     cin >> n;
-    reset();
+    reset(); // <===
 
     for (int i = 0; i < n - 1; i++) {
         int u, v;
