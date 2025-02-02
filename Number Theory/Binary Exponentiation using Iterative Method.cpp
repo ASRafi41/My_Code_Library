@@ -1,28 +1,26 @@
-// Time Complexity -> O(log(b));    //best method
-#include<bits/stdc++.h>
+// Time Complexity -> O(log(b)); 
+#include <bits/stdc++.h>
+using ll = long long;
 using namespace std;
 
-const int M=1e9+7;
-long long BinExpIter(long long a,long long b)
-{
-    long long ans=1;
-    while(b)
-    {
-        if(b&1)
-        {
-            ans=ans*a;
-            //ans=(ans*a)%M;
-        }
-        a=a*a;
-        //a=(a*a)%M;
-        b>>=1;
+ll Pow(ll a, ll b, ll mod = 1e9 + 7) { // O(log b)
+    ll ans = 1 % mod;
+    a %= mod;
+    if(a < 0) a += mod;
+    while (b) {
+        if (b & 1) ans = (ans * a) % mod;
+        a = (a * a) % mod;
+        b >>= 1;
     }
     return ans;
 }
-int main()
-{
-    long long a,b,ans;
-    cin>>a>>b;
-    ans=BinExpIter(a,b);
-    cout<<ans;
+
+int main() {
+    ll a = 2, b = 92;
+    cout << a << "^" << b << " = " << Pow(a, b) << endl;
+
+    // long double x = 2.6769;
+    // cout << x << "^" << b << " = " << Pow(x, b) << endl;
+
+    return 0;
 }
