@@ -88,7 +88,7 @@ ll pollard_rho(ll n) {
 }
 
 // Function to Find All Prime Factors
-void factorize(ll n, vector<ll> &factors) {
+void factorize(ll n, vector<ll> &factors) { // O(N^1/3)
     if (n <= 1) return;
     if ((n < N ? isPrime1(n) : isPrime(n))) { // If prime, add it to factors
         factors.push_back(n);
