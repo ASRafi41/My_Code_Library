@@ -13,7 +13,6 @@ int marked[N / 64 + 2];
 bool isPrime1(int num) {
     return num > 1 && (num == 2 || ((num & 1) && !on(num)));
 }
-
 void sieve() {
     for (int i = 3; i * i < N; i += 2) {
         if (!on(i)) {
@@ -23,6 +22,7 @@ void sieve() {
         }
     }
 }
+
 
 ll Pow(ll a, ll b, ll mod) { // O(log b)
     ll ans = 1 % mod;
@@ -64,6 +64,7 @@ bool isPrime(ll n) { // MillerRabin => O(k * log(n))
     return true;
 }
 
+
 // Pollard’s Rho Algorithm to Find a Factor
 ll pollard_rho(ll n) {
     if (n % 2 == 0) return 2;
@@ -88,7 +89,7 @@ ll pollard_rho(ll n) {
 }
 
 // Function to Find All Prime Factors
-void factorize(ll n, vector<ll> &factors) { // O(N^1/3)
+void factorize(ll n, vector<ll> &factors) {  // O(N^1/3)
     if (n <= 1) return;
     if ((n < N ? isPrime1(n) : isPrime(n))) { // If prime, add it to factors
         factors.push_back(n);
@@ -117,7 +118,31 @@ int main() {
         i = j;
     }
 
-    cout << "Factors: \n";
+    cout << "Prime Factors: \n";
     for (auto &[prime, cnt]: pf) cout << prime << " " << cnt << endl;
+    cout << endl;
+
+    /// ==> Divisors <==
+    ll divisorsSum = 0;
+    vector<ll> divisors;
+    auto divisorSum = [&](auto&& self, int i, ll factor) -> void {
+        if(i == pf.size()) {
+            divisors.push_back(factor);
+            divisorsSum += factor;
+            return;
+        }
+        self(self, i + 1, factor); // not take
+        ll val = 1;
+        for(int j = 1; j <= pf[i].second; j++) {
+            val *= pf[i].first;
+            self(self, i + 1, factor * val);
+        }
+        return;
+    };
+    divisorSum(divisorSum, 0, 1);
+    sort(divisors.begin(), divisors.end());
+
+    cout << "Divisor are: " << endl;
+    for(auto &d: divisors) cout << d << " "; cout << endl;
     return 0;
 }
