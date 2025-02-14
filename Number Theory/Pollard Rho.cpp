@@ -4,26 +4,6 @@ using namespace std;
 using ll = long long;
 using lll = __int128_t;
 
-const int N = 1e8 + 7;
-int marked[N / 64 + 2];
-
-#define on(x) (marked[x / 64] & (1 << ((x % 64) / 2)))
-#define mark(x) marked[x / 64] |= (1 << ((x % 64) / 2))
-
-bool isPrime1(int num) {
-    return num > 1 && (num == 2 || ((num & 1) && !on(num)));
-}
-void sieve() {
-    for (int i = 3; i * i < N; i += 2) {
-        if (!on(i)) {
-            for (int j = i * i; j <= N; j += i + i) {
-                mark(j);
-            }
-        }
-    }
-}
-
-
 ll Pow(ll a, ll b, ll mod) { // O(log b)
     ll ans = 1 % mod;
     a %= mod;
@@ -64,7 +44,6 @@ bool isPrime(ll n) { // MillerRabin => O(k * log(n))
     return true;
 }
 
-
 // Pollard’s Rho Algorithm to Find a Factor
 ll pollard_rho(ll n) {
     if (n % 2 == 0) return 2;
@@ -91,7 +70,7 @@ ll pollard_rho(ll n) {
 // Function to Find All Prime Factors
 void factorize(ll n, vector<ll> &factors) {  // O(N^1/3)
     if (n <= 1) return;
-    if ((n < N ? isPrime1(n) : isPrime(n))) { // If prime, add it to factors
+    if (isPrime(n)) { // If prime, add it to factors
         factors.push_back(n);
         return;
     }
@@ -101,11 +80,26 @@ void factorize(ll n, vector<ll> &factors) {  // O(N^1/3)
     factorize(n / factor, factors);
 }
 
+lll phi(ll x) { // Euler Totient Function => O(N^1/3)
+    vector<ll> factors;
+    factorize(x, factors);
+    sort(factors.begin(), factors.end());
+    
+    lll phiX = x;
+    for(int i = 0; i < factors.size(); ) {
+        int j = i + 1;
+        while(j < factors.size() && factors[i] == factors[j]) ++j;
+        phiX = phiX * (factors[i] - 1) / factors[i];
+        i = j;
+    }
+    return phiX;
+}
+
 int main() {
-    sieve(); // <==== prime build
     ll num;
     cin >> num;
 
+    /// ==> Prime Factor <==
     vector<ll> factors;
     factorize(num, factors);
     sort(factors.begin(), factors.end());
@@ -122,6 +116,7 @@ int main() {
     for (auto &[prime, cnt]: pf) cout << prime << " " << cnt << endl;
     cout << endl;
 
+    
     /// ==> Divisors <==
     ll divisorsSum = 0;
     vector<ll> divisors;
@@ -143,6 +138,11 @@ int main() {
     sort(divisors.begin(), divisors.end());
 
     cout << "Divisor are: " << endl;
-    for(auto &d: divisors) cout << d << " "; cout << endl;
+    for(auto &d: divisors) cout << d << " ";
+    cout << endl << endl;
+
+
+    /// ==> Euler Totient Function <==
+    cout << "Phi(" << num << ") = " << (ll)phi(num) << endl;
     return 0;
 }
