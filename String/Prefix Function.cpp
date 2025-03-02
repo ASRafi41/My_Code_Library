@@ -9,7 +9,7 @@ length of the longest proper prefix of the substring s[0...i] that is also a suf
 
 => proper prefix: A prefix that is not the entire substring.
 
-.........i.....
+......i.....
 ____  ____
       phi(i)
 */
