@@ -12,7 +12,7 @@ ______      _______
             z(i)
 */
 
-vector<int> computeZ(const string &s) {
+vector<int> computeZ(const string &s) { // O(n)
     int n = s.size();
     vector<int> z(n, 0);
     int l = 0, r = 0;
