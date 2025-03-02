@@ -20,7 +20,7 @@ struct Trie {
         root = new node();
     }
 
-    void trieInsert(const string &s) {
+    void Insert(const string &s) {
         node *cur = root;
         for (char ch : s) {
             int x = ch - 'a'; // for lowercase letter
@@ -33,7 +33,7 @@ struct Trie {
         cur->completedWord = true;
     }
 
-    bool trieSearch(const string &s) {
+    bool Search(const string &s) {
         node *cur = root;
         for (char ch : s) {
             int x = ch - 'a'; // for lowercase letter
@@ -85,12 +85,12 @@ int main() {
         string s;
         for (int i = 0; i < n; i++) {
             cin >> s;
-            trie.trieInsert(s);
+            trie.Insert(s);
         }
         cin >> q;
         while (q--) {
             cin >> s;
-            if (trie.trieSearch(s)) cout << "Found\n";
+            if (trie.Search(s)) cout << "Found\n";
             else cout << "Not Found\n";
         }
     }
