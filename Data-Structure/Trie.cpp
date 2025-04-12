@@ -33,6 +33,19 @@ struct Trie {
         cur->completedWord = true;
     }
 
+    void Delete(const string &s) {
+        node *cur = root;
+        for (char ch : s) {
+            int x = ch - 'a'; // for lowercase letter
+            // if (cur->next[x] == nullptr) {
+            //     cur->next[x] = new node();
+            // }
+            cur = cur->next[x];
+            cur->cnt -= 1;
+        }
+        if(cur->cnt == 0) cur->completedWord = false;
+    }
+
     bool Search(const string &s) {
         node *cur = root;
         for (char ch : s) {
