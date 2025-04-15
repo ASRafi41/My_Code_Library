@@ -3,6 +3,7 @@ using namespace std;
 
 struct Trie {
     static const int rangeSize = 26; // for lower_case letter ('a' <= 'z')
+    static const char startingChar = 'a'; // for lower_case letter ('a' <= 'z')
 
     struct node {
         node *next[rangeSize]; 
@@ -23,7 +24,7 @@ struct Trie {
     void Insert(const string &s) {
         node *cur = root;
         for (char ch : s) {
-            int x = ch - 'a'; // for lowercase letter
+            int x = ch - startingChar;
             if (cur->next[x] == nullptr) {
                 cur->next[x] = new node();
             }
@@ -36,7 +37,7 @@ struct Trie {
     void Delete(const string &s) {
         node *cur = root;
         for (char ch : s) {
-            int x = ch - 'a'; // for lowercase letter
+            int x = ch - startingChar;
             // if (cur->next[x] == nullptr) {
             //     cur->next[x] = new node();
             // }
@@ -49,7 +50,7 @@ struct Trie {
     bool Search(const string &s) {
         node *cur = root;
         for (char ch : s) {
-            int x = ch - 'a'; // for lowercase letter
+            int x = ch - startingChar;
             if (cur->next[x] == nullptr) {
                 return false;
             }
@@ -61,7 +62,7 @@ struct Trie {
     int prefixCount(const string &s) {
         node *cur = root;
         for (char ch : s) {
-            int x = ch - 'a'; // for lowercase letter
+            int x = ch - startingChar;
             if (cur->next[x] == nullptr) {
                 return 0;
             }
@@ -78,8 +79,8 @@ struct Trie {
     }
 
     void clear() {
-        reset(root); // Delete all nodes
-        root = new node(); // Re-initialize root node for reuse
+        reset(root);
+        root = new node();
     }
 
     ~Trie() { // Destructor 
