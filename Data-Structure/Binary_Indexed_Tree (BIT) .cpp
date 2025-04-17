@@ -5,6 +5,8 @@ using namespace std;
 using ll = long long;
 using ld = long double;
 
+// Only Sum operation properly work :)
+
 template <class T>
 struct BIT { // 1-indexed
     int n;
@@ -15,11 +17,13 @@ struct BIT { // 1-indexed
         t.assign(n + 1, 0);
     }
     T query(int i) {
+        assert(i > 0); // <==
         T ans = 0;
         for (; i >= 1; i -= (i & -i)) ans += t[i];
         return ans;
     }
     T query(int l, int r) {
+        if(l == 1) return query(r);
         return query(r) - query(l - 1);
     }
     void update(int i, T val) {
@@ -27,8 +31,8 @@ struct BIT { // 1-indexed
         for (; i <= n; i += (i & -i)) t[i] += val;
     }
     void update(int l, int r, T val) {
-        upd(l, val);
-        upd(r + 1, -val);
+        update(l, val);
+        update(r + 1, -val);
     }
 };
 
@@ -83,7 +87,7 @@ void solve() {
     return;
 }
 
-signed main() {
+int main() {
     ios::sync_with_stdio(false); cin.tie(0);
     int tc = 1;
     // cin >> tc;
