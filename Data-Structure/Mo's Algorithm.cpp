@@ -87,5 +87,4 @@ int main() {
     }
     return 0;
 }
-// Mo's + Square root decomposition => 
-https://codeforces.com/contest/1000/submission/316444520
+// Mo's + Square root decomposition => https://codeforces.com/contest/1000/submission/316444520
