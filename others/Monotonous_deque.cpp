@@ -8,7 +8,7 @@ struct Monotonous_deque {
     deque<int> dq;
 
     void add(int x) {
-        while(!dq.empty() && dq.back() > x) {
+        while(!dq.empty() && dq.back() > x) { // for min
             dq.pop_back();
         }
         dq.push_back(x);
@@ -20,7 +20,7 @@ struct Monotonous_deque {
         }
     }
 
-    int get_min() {
+    int get_ans() {
         return dq.empty() ? 0 : dq.front();
     }
 } mq;
@@ -36,7 +36,7 @@ int main() {
         v[i] = x;
         mq.add(x);
         if(i >= k - 1) {
-            xorr ^= mq.get_min();
+            xorr ^= mq.get_ans();
             mq.remove(v[i - k + 1]);
         }
         x = (1LL * a * x + b) % c;
