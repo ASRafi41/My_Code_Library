@@ -8,18 +8,15 @@ const int N = 2e5 + 3, LG = 18;
 
 struct Segment_Tree { // 1'base
     ll t[2 * N];
-
     auto merge(auto &l, auto &r) { // <==
         return max(l, r);
     }
-
     void build(int node, int st, int en, auto &arr) {
         int n = en - st + 1;
         for(int i = 1; i <= n; i++) t[n + i - 1] = arr[i]; 
         for (int i = n - 1; i > 0; --i)
             t[i] = merge(t[i << 1], t[i << 1 | 1]);
     }
-
     void update(int node, int st, int en, int idx, ll val) {
         int n = en - st + 1;
         int p = (idx - st) + n;
@@ -27,7 +24,6 @@ struct Segment_Tree { // 1'base
         for (p >>= 1; p > 0; p >>= 1)
             t[p] = merge(t[p << 1], t[p << 1 | 1]);
     }
-
     ll query(int node, int st, int en, int l, int r) {
         int n = en - st + 1;
         int L = (l - st) + n, R = (r - st) + n;
@@ -73,6 +69,7 @@ int kth(int u, int k) {
             u = par[u][i];
     return u;
 }
+
 int T, head[N], st[N], en[N];
 void dfs_hld(int u) {
     st[u] = ++T;
@@ -106,11 +103,9 @@ ll query(int u, int v) {
 
 int main() {
     ios::sync_with_stdio(false); cin.tie(0);
-    int q;
-	cin >> n >> q;
+    int q; cin >> n >> q;
     int val[n + 1];
     for(int i = 1; i <= n; i++) cin >> val[i];
- 
     for (int i = 1; i < n; i++) {
         int u, v; cin >> u >> v;
         g[u].push_back(v);
