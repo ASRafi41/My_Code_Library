@@ -9,7 +9,7 @@ const int N = 2e5 + 3;
 struct Segment_Tree { // 1'base
     ll t[2 * N];
 
-    auto merge(auto &l, auto &r) {
+    auto merge(auto &l, auto &r) { // <==
         return l + r;
     }
 
