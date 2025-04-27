@@ -12,14 +12,12 @@ struct Segment_Tree { // 1'base
     auto merge(auto &l, auto &r) { // <==
         return l + r;
     }
-
     void build(int node, int st, int en, auto &arr) {
         int n = en - st + 1;
         for(int i = 1; i <= n; i++) t[n + i - 1] = arr[i]; 
         for (int i = n - 1; i > 0; --i)
             t[i] = merge(t[i << 1], t[i << 1 | 1]);
     }
-
     void update(int node, int st, int en, int idx, ll val) {
         int n = en - st + 1;
         int p = (idx - st) + n;
@@ -27,11 +25,10 @@ struct Segment_Tree { // 1'base
         for (p >>= 1; p > 0; p >>= 1)
             t[p] = merge(t[p << 1], t[p << 1 | 1]);
     }
-
     ll query(int node, int st, int en, int l, int r) {
         int n = en - st + 1;
         int L = (l - st) + n, R = (r - st) + n;
-        ll ans = 0;
+        ll ans = 0; // <==
         for (; L <= R; L >>= 1, R >>= 1) {
             if (L & 1) ans = merge(ans, t[L++]);
             if (!(R & 1)) ans = merge(ans, t[R--]);
