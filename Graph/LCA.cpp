@@ -8,13 +8,14 @@ const int N = 3e5 + 7;
 vector<int> g[N];
 
 struct LCA {
-    int table[N + 1][21];
+    static const int lg = 20;
+    int table[N][lg + 1];
     int level[N];
 
     void dfs(int v, int par = -1, int dep = 0) {
         table[v][0] = par;
         level[v] = dep;
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= lg; i++) {
             if (table[v][i - 1] != -1) {
                 table[v][i] = table[table[v][i - 1]][i - 1];
             }
@@ -27,19 +28,19 @@ struct LCA {
     void build(int n, int root = 1) { //=> O(N * log N)
         for (int i = 0; i <= n; i++) {
             level[i] = 0;
-            for (int j = 0; j <= 20; j++) table[i][j] = -1;
+            for (int j = 0; j <= lg; j++) table[i][j] = -1;
         }
         dfs(root);
     }
 
     int findLCA(int a, int b) { //=> O(log N)
         if (level[a] < level[b]) swap(a, b);
-        for (int i = 20; i >= 0; i--) {  // a and b come to the same level
+        for (int i = lg; i >= 0; i--) {  // a and b come to the same level
             if (table[a][i] != -1 && level[table[a][i]] >= level[b])
                 a = table[a][i];
         }
         if (a == b) return a; 
-        for (int i = 20; i >= 0; i--) {
+        for (int i = lg; i >= 0; i--) {
             if (table[a][i] != -1 && table[a][i] != table[b][i]) {
                 a = table[a][i], b = table[b][i];
             }
@@ -51,7 +52,7 @@ struct LCA {
         return level[u] + level[v] - (level[l] << 1);
     }
     int kth(int u, int k) {
-        for (int i = 0; i <= 20; i++)
+        for (int i = 0; i <= lg; i++)
             if (k & (1 << i)) u = table[u][i];
         return u;
     }
