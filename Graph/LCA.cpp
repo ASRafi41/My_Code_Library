@@ -32,7 +32,7 @@ struct LCA {
         dfs(root);
     }
 
-    int query(int a, int b) { //=> O(log N)
+    int findLCA(int a, int b) { //=> O(log N)
         if (level[a] < level[b]) swap(a, b);
         for (int i = 20; i >= 0; i--) {  // a and b come to the same level
             if (table[a][i] != -1 && level[table[a][i]] >= level[b])
@@ -47,7 +47,7 @@ struct LCA {
         return table[a][0];
     }
     int dist(int u, int v) { // distance between two node
-        int l = query(u, v);
+        int l = findLCA(u, v);
         return level[u] + level[v] - (level[l] << 1);
     }
     int kth(int u, int k) {
@@ -56,7 +56,7 @@ struct LCA {
         return u;
     }
     int findKth(int u, int v, int k) { // kth node from u to v, 0th node is u
-        int l = query(u, v);
+        int l = findLCA(u, v);
         int d = level[u] + level[v] - (level[l] << 1);
         if (level[l] + k <= level[u]) return kth(u, k);
         k -= level[u] - level[l];
@@ -81,7 +81,7 @@ void solve() {
     while(q--) {
         int u, v;
         cin >> u >> v;
-        cout << lca.query(u, v) << endl;
+        cout << lca.findLCA(u, v) << endl;
     }
     return;
 }
