@@ -4,7 +4,7 @@
 using namespace std;
 using ll = long long;
 
-const int N = 1e5 + 7, INF = 1e9 + 3;
+const int N = 3e5 + 7, INF = 1e9 + 3;
 vector<int> g[N];
 
 struct LCA {
