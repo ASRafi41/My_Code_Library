@@ -58,10 +58,11 @@ void centroid_decomp(int node = 1) {
     mx_depth = 0;
 
     // Updating counters for each child of the centroid
-    for(int i : g[centroid]) {
-        if(!processed[i]) {
-            get_cnt(i, centroid, false); // calculate
-            get_cnt(i, centroid, true); // update
+    auto &Cur = g[centroid];
+    for(int i = 0; i < Cur.size(); i++) {
+        if(!processed[Cur[i]]) {
+            get_cnt(Cur[i], centroid, false); // calculate
+            if(i + 1 < Cur.size()) get_cnt(Cur[i], centroid, true); // update
         }
     }
     // edit here
