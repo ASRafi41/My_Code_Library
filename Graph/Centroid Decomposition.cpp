@@ -7,11 +7,11 @@
 using namespace std;
 using ll = long long;
 
-const int N = 2e5 + 7;
+const int N = 2e5 + 3;
 int n, mx_depth;
 vector<int> g[N];
 int subtree[N];
-bool processed[N];
+bitset<N> processed = 0;
 
 // Function to compute subtree sizes rooted at each node
 int get_subtree_sizes(int node, int parent = 0) {
