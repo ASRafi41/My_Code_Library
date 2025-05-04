@@ -7,15 +7,13 @@ using namespace std;
 using namespace __gnu_pbds;
 
 template <typename T> using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-
 template <typename T, typename R> using ordered_map = tree<T, R, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 // *s.find_by_order(k): K-th element in a set (counting from zero).
 // s.order_of_key(k): Number of items strictly smaller than k. (same as lower_bound of k)
 // less_equal<T> => for ordered_multiset or, ordered_multimap
 
-int main()
-{
+int main() {
     ordered_set<ll> s;
     s.insert(1);
     s.insert(2);
