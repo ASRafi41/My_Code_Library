@@ -3,7 +3,7 @@
 using namespace std;
 using ll = long long;
 
-struct HopcroftKarp { // O(sqrt(V) * E * log V)
+struct HopcroftKarp { // O(sqrt(V) * E)
   static const int inf = 1e9;
   int n;
   vector<int> l, r, d;
