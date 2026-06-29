@@ -85,8 +85,16 @@ bool is_ancestor(int u, int v) { // u is an ancestor of v
     return tin[u] <= tin[v] && tout[u] >= tout[v];
 }
 
+bool onPath(int a, int u, int v) { // a is on the path from u to v
+    int l = lca_query(u, v);
+
+    return (is_ancestor(a, u) && is_ancestor(l, a)) ||
+           (is_ancestor(a, v) && is_ancestor(l, a));
+}
+
 void reset() {
     lg = log2l(n) + 1;
+    Time = 0;
     for (int i = 0; i <= n; i++) {
         g[i].clear();
         level[i] = 0;
